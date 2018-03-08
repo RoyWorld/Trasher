@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--数据库关系模型-->
+    <bean id="dbModel" class="com.trasher.database.DBModel"/>
+
+    <!--list of all tables-->
+    <bean id="tableList" class="com.trasher.database.DBModel" factory-method="getTables"/>
+
+    <!--tableMap, key: tableName, value: table-->
+    <bean id="tableMap" class="com.trasher.database.DBModel" factory-method="getTableMap"/>
+
+    <!--task queue-->
+    <bean id="taskQueue" class="java.util.concurrent.LinkedBlockingQueue"/>
+
+    <!--threadPool-->
+    <bean id="executorService" class="java.util.concurrent.ThreadPoolExecutor">
+        <constructor-arg index="0" value="10"/>
+        <constructor-arg index="1" value="10"/>
+        <constructor-arg index="2" value="1"/>
+        <constructor-arg index="3" value="SECONDS"/>
+        <constructor-arg index="4" ref="taskQueue"/>
+    </bean>
+
+    <!--读取config.properties, 可用以下这种方式, 也可以用context的方式-->
+    <bean id="appConfigProperties" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+        <property name="location" value="classpath:config.properties" />
+    </bean>
+
+    <!--<context:property-placeholder location="classpath:config.properties" />-->
+    <context:annotation-config />
+    <context:component-scan base-package="com.trasher"/>
+
+    <!--各个不同的table对应的数据bean-->
+    <!--这部分bean用lazy-init的方式加载，只有当调用的时候才会加载-->
+    <import resource="table_data.xml"/>
+
+    <aop:aspectj-autoproxy/>
+
+</beans>

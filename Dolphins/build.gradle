@@ -1,0 +1,40 @@
+group 'Dolphins'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+task createJavaFile() {
+
+    file("src/main/java/com/dolpins").mkdirs()
+
+//    file('src/main/java/com/dolpins/package-info.java').createNewFile()
+
+
+    file("src/test/java/com/dolpins").mkdirs()
+
+//    file('src/test/java/com/dolpins/package-info.java').createNewFile()
+}
+
+task createJavaProject() {
+
+    sourceSets*.java.srcDirs*.each{ mkdir(it.path) }
+
+    sourceSets*.resources.srcDirs*.each{ mkdir(it.path) }
+
+    file('readme.md').createNewFile()
+}
+
+
+dependencies {
+
+    compile 'mysql:mysql-connector-java:5.1.30'
+
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
