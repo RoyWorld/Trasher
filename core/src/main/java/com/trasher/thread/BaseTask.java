@@ -3,7 +3,8 @@ package com.trasher.thread;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-/**所有task都继承这个basetask
+/**
+ * 所有task都继承这个basetask
  * Created by RoyChan on 2018/2/8.
  */
 public abstract class BaseTask implements Runnable{

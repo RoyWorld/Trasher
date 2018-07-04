@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 /**
+ * 数据生成任务
  * Created by RoyChan on 2018/2/9.
  */
 public class Task extends BaseTask {

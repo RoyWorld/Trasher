@@ -1,5 +1,5 @@
 # Project Description
-这个工具是用于对数据库中的表产生大量数据，方便开发和测试功能
+这个工具是用于对数据库中的表产生大量数据, 方便开发和测试功能
 
 # About Project
 ## project structure
@@ -16,15 +16,25 @@ CREATE TABLE `tb_xx` (
   `lastModifier` varchar(36) DEFAULT NULL COMMENT '最后修改人',
   `createDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '新建时间',
   `lastModify` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后修改时间',
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='XX表|CreateBaseDomain\r\n系统XX表';
 ```
-用了Spring来管理公共组件，用logback来打印日志信息
+用Spring来管理公共组件, 用logback来打印日志信息
 
 ### the order of data generation
-通过将表间的依赖关系转化成AOV网
-对AOV网进行拓扑排序
-每个表的数据生成顺序是由拓扑排序的逆序所确定的
+各个表的数据生成顺序是通过以下几步确定的
+1 通过将表间的依赖关系转化成AOV网
+2 对AOV网进行拓扑排序
+3 最后由拓扑排序的逆序确定每个表的数据生成顺序
+
+![Project Structure](https://raw.githubusercontent.com/RoyWorld/Trasher/master/core/src/main/resources/images/projectStructure.png)
+上图的拓扑排序和逆序如下:
+```xml
+<!-- topological Sort -->
+A->B->E->F->C->D
+<!--reverse topological Sort -->
+D->C->F->E->B->A
+```
 
 ### data generation
 这里运用了工厂方法模式并配合Spring来做配置，每个表既可以配置一个special data generator，也可以使用generic data generator。 

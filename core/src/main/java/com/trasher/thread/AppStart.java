@@ -56,7 +56,7 @@ public class AppStart extends BaseTask {
 
             threadPoolExecutor = (ThreadPoolExecutor) context.getBean("executorService");
 
-            int taskCount = 10;
+            int taskCount = 100;
 
             CountDownLatch countDownLatch = new CountDownLatch(taskCount);
 

@@ -3,6 +3,8 @@ package com.trasher.service;
 import com.dolpins.domains.Table;
 import com.trasher.data.DataFactory;
 import com.trasher.database.DBOperator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +14,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 执行数据生成
  * Created by RoyChan on 2018/2/13.
  */
 @Service(value = "execService")
 public class ExecSercvice {
+
+    public static final Logger logger = LoggerFactory.getLogger(ExecSercvice.class);
 
     @Autowired
     DataFactory dataFactory;
@@ -39,6 +44,9 @@ public class ExecSercvice {
                 Iterator<String> iterator = data.keySet().iterator();
                 while (iterator.hasNext()) {
                     String key = iterator.next();
+//                    if (key.equals("id")){
+//                        continue;
+//                    }
                     columnName = columnName + key;
                     columnData = columnData + data.get(key);
                     if (iterator.hasNext()) {
@@ -47,13 +55,14 @@ public class ExecSercvice {
                     }
                 }
 
-                sql = "insert into " + table.getSqlName() + " (" + columnName + ") values (" + columnData + ");";
+                sql = "insert into `" + table.getSqlName() + "` (" + columnName + ") values (" + columnData + ");";
 
                 dbOperator.executeInsert(sql);
 
             }
         } catch (SQLException e){
-            throw new SQLException(sql);
+            logger.error(sql);
+            throw new SQLException(e);
         }
 
     }

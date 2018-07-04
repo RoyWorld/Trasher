@@ -25,4 +25,28 @@
         <constructor-arg index="1" value="tb_c"/>
     </bean>
 
+    <bean id="account" class="com.trasher.data.DataFactory" factory-method="generate" factory-bean="dataFactory" scope="prototype" >
+        <constructor-arg index="0" value="com.trasher.data.ta.AccountData"/>
+        <constructor-arg index="1" value="account"/>
+    </bean>
+
+    <bean id="custmor" class="com.trasher.data.DataFactory" factory-method="generate" factory-bean="dataFactory"  scope="prototype">
+        <constructor-arg index="0" value="com.trasher.data.ta.CustmorData"/>
+        <constructor-arg index="1" value="custmor"/>
+    </bean>
+
+    <bean id="order" class="com.trasher.data.DataFactory" factory-method="generate" factory-bean="dataFactory"  scope="prototype">
+        <constructor-arg index="0" value="com.trasher.data.ta.OrderData"/>
+        <constructor-arg index="1" value="order"/>
+    </bean>
+
+    <bean id="order_detail" class="com.trasher.data.DataFactory" factory-method="generate" factory-bean="dataFactory"  scope="prototype">
+        <constructor-arg index="0" value="com.trasher.data.ta.OrderDetailData"/>
+        <constructor-arg index="1" value="order_detail"/>
+    </bean>
+
+    <bean id="stock" class="com.trasher.data.DataFactory" factory-method="generate" factory-bean="dataFactory"  scope="prototype">
+        <constructor-arg index="0" value="com.trasher.data.ta.StockData"/>
+        <constructor-arg index="1" value="stock"/>
+    </bean>
 </beans>

@@ -47,9 +47,5 @@ public abstract class AbstractTableData {
 
     public abstract Map<String, Object> produceData();
 
-    protected String createDateData(){
-        return "now()";
-    }
-
 
 }

@@ -9,6 +9,7 @@
 *.ap_
 build/
 out/
+logs/
 
 # files for the dex VM
 *.dex

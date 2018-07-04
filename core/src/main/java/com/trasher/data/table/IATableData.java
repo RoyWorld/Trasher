@@ -3,7 +3,10 @@ package com.trasher.data.table;
 import com.dolpins.domains.Table;
 import com.trasher.data.AbstractTableData;
 import com.trasher.data.TableIdMap;
+import com.trasher.data.UnitDataUtil;
 import com.trasher.database.JavaType;
+import com.trasher.util.LoadContext;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +17,8 @@ import java.util.UUID;
  * Created by RoyChan on 2018/2/5.
  */
 public class IATableData extends AbstractTableData {
+
+    UnitDataUtil unitDataUtil = LoadContext.getBean("unitDataUtil");
 
     private final String[] charArray = new String[]{
             "Jakc",
@@ -41,7 +46,7 @@ public class IATableData extends AbstractTableData {
             }else {
                 JavaType type = JavaType.fromName(column.getJavaType());
                 if (type == JavaType.Date){
-                    data.put(column.getSqlName(), createDateData());
+                    data.put(column.getSqlName(), unitDataUtil.date());
                 }
                 if (type == JavaType.String){
                     data.put(column.getSqlName(), "'" + getName() + "'");
