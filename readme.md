@@ -3,7 +3,7 @@
 
 # About Project
 ## project structure
-![Project Structure](https://raw.githubusercontent.com/RoyWorld/Trasher/master/src/main/resources/images/projectStructure.png)
+![Project Structure](https://raw.githubusercontent.com/RoyWorld/Trasher/master/core/src/main/resources/images/projectStructure.png)
 
 ## how to use
 ### about dependency
@@ -27,7 +27,7 @@ CREATE TABLE `tb_xx` (
 2 对AOV网进行拓扑排序
 3 最后由拓扑排序的逆序确定每个表的数据生成顺序
 
-![Project Structure](https://raw.githubusercontent.com/RoyWorld/Trasher/master/core/src/main/resources/images/projectStructure.png)
+![Project Structure](https://raw.githubusercontent.com/RoyWorld/Trasher/master/core/src/main/resources/images/DBRelationshipModel.png)
 上图的拓扑排序和逆序如下:
 ```xml
 <!-- topological Sort -->
