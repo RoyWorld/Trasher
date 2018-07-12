@@ -40,6 +40,90 @@ D->C->F->E->B->A
 这里运用了工厂方法模式并配合Spring来做配置，每个表既可以配置一个special data generator，也可以使用generic data generator。 
 如果要配置special data generator， 则要在`table_data.xml`中声明相关配置，否则将默认使用generic data generator来生成数据
 
+### test table
+```sql
+CREATE TABLE `account` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `code` varchar(64) DEFAULT NULL COMMENT 'code',
+  `user_name` varchar(64) DEFAULT NULL COMMENT '用户名',
+  `user_password` varchar(64) DEFAULT NULL COMMENT '用户密码',
+  `status` tinyint(4) DEFAULT '1' COMMENT '状态：1-可用；2-不可用',
+  `create_time` bigint(20) DEFAULT NULL COMMENT '创建时间',
+  `creator` varchar(64) DEFAULT NULL COMMENT '创建人',
+  `modified_time` bigint(20) DEFAULT NULL COMMENT '修改时间',
+  `modified` varchar(64) DEFAULT NULL COMMENT '修改人',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='账号表|CreateBaseDomain\r\n系统账号表';
+
+CREATE TABLE `custmor` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `code` varchar(64) DEFAULT NULL COMMENT 'code',
+  `custmor_name` varchar(64) DEFAULT NULL COMMENT '用户名',
+  `phone_number` varchar(64) DEFAULT NULL COMMENT '电话号码',
+  `qq_number` varchar(64) DEFAULT NULL COMMENT 'QQ号码',
+  `wechat` varchar(64) DEFAULT NULL COMMENT '微信',
+  `address` varchar(255) DEFAULT NULL COMMENT '地址',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `status` tinyint(4) DEFAULT '1' COMMENT '状态：1-可用；2-不可用',
+  `create_time` bigint(20) DEFAULT NULL COMMENT '创建时间',
+  `creator` varchar(64) DEFAULT NULL COMMENT '创建人',
+  `modified_time` bigint(20) DEFAULT NULL COMMENT '修改时间',
+  `modified` varchar(64) DEFAULT NULL COMMENT '修改人',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=100001 DEFAULT CHARSET=utf8 COMMENT='客户表|CreateBaseDomain\r\n系统客户表';
+
+CREATE TABLE `order` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `code` varchar(64) DEFAULT NULL COMMENT 'code',
+  `custmor_id` int(10) unsigned DEFAULT '1' COMMENT '客户id|custmor',
+  `address` varchar(255) DEFAULT NULL COMMENT '地址',
+  `total_price` decimal(9,2) DEFAULT NULL COMMENT '总价',
+  `final_price` decimal(9,2) DEFAULT NULL COMMENT '成交价',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `status` tinyint(4) DEFAULT '1' COMMENT '状态：1-可用；2-不可用',
+  `create_time` bigint(20) DEFAULT NULL COMMENT '创建时间',
+  `creator` varchar(64) DEFAULT NULL COMMENT '创建人',
+  `modified_time` bigint(20) DEFAULT NULL COMMENT '修改时间',
+  `modified` varchar(64) DEFAULT NULL COMMENT '修改人',
+  PRIMARY KEY (`id`),
+  KEY `custmor_id_index` (`custmor_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=100001 DEFAULT CHARSET=utf8 COMMENT='订单表|CreateBaseDomain\r\n系统订单表';
+
+CREATE TABLE `order_detail` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `code` varchar(64) DEFAULT NULL COMMENT 'code',
+  `order_id` int(10) unsigned NOT NULL COMMENT '订单id|order',
+  `stock_id` int(10) unsigned NOT NULL COMMENT '库存id|stock',
+  `amount` int(11) DEFAULT '0' COMMENT '数量',
+  `price` decimal(9,2) DEFAULT NULL COMMENT '售价',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `status` tinyint(4) DEFAULT '1' COMMENT '状态：1-可用；2-不可用',
+  `create_time` bigint(20) DEFAULT NULL COMMENT '创建时间',
+  `creator` varchar(64) DEFAULT NULL COMMENT '创建人',
+  `modified_time` bigint(20) DEFAULT NULL COMMENT '修改时间',
+  `modified` varchar(64) DEFAULT NULL COMMENT '修改人',
+  PRIMARY KEY (`id`),
+  KEY `order_id_index` (`order_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=100001 DEFAULT CHARSET=utf8 COMMENT='订单明细表|CreateBaseDomain\r\n系统订单明细表';
+
+CREATE TABLE `stock` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `code` varchar(64) DEFAULT NULL COMMENT 'code',
+  `product_name` varchar(255) DEFAULT NULL COMMENT '产品名',
+  `cost` decimal(9,2) DEFAULT NULL COMMENT '成本',
+  `price` decimal(9,2) DEFAULT NULL COMMENT '售价',
+  `amount` int(11) DEFAULT '0' COMMENT '数量',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `status` tinyint(4) DEFAULT '1' COMMENT '状态：1-可用；2-不可用',
+  `create_time` bigint(20) DEFAULT NULL COMMENT '创建时间',
+  `creator` varchar(64) DEFAULT NULL COMMENT '创建人',
+  `modified_time` bigint(20) DEFAULT NULL COMMENT '修改时间',
+  `modified` varchar(64) DEFAULT NULL COMMENT '修改人',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=100001 DEFAULT CHARSET=utf8 COMMENT='库存表|CreateBaseDomain\r\n系统库存表';
+```
+
+
 # project version
 ## v1.0.1
 目前已实现的功能
