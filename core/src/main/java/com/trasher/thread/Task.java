@@ -1,5 +1,6 @@
 package com.trasher.thread;
 
+import com.trasher.data.TableIdMap;
 import com.trasher.service.ExecSercvice;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
@@ -33,7 +34,7 @@ public class Task extends BaseTask {
         try {
             ExecSercvice execSercvice = (ExecSercvice) context.getBean("execService");
 
-            execSercvice.exec(sortList);
+            execSercvice.exec(sortList, new TableIdMap());
 
             countDownLatch.countDown();
         } catch (SQLException e) {

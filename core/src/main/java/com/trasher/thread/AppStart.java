@@ -32,6 +32,7 @@ public class AppStart extends BaseTask {
         logger = LogFactory.getLog(this.getClass());
     }
 
+    @Override
     public void run(){
         try{
             printLog("-----------App start-----------");
@@ -56,7 +57,7 @@ public class AppStart extends BaseTask {
 
             threadPoolExecutor = (ThreadPoolExecutor) context.getBean("executorService");
 
-            int taskCount = 100;
+            int taskCount = 100000;
 
             CountDownLatch countDownLatch = new CountDownLatch(taskCount);
 
@@ -65,7 +66,7 @@ public class AppStart extends BaseTask {
             }
 
             while (threadPoolExecutor.getCompletedTaskCount() < taskCount){
-                long timeOfUsing = calcTime(startTime, System.currentTimeMillis());
+//                long timeOfUsing = calcTime(startTime, System.currentTimeMillis());
                 printDebugLog(String.format("task complete: %s", threadPoolExecutor.getCompletedTaskCount()));
                 Thread.sleep(1000);
             }

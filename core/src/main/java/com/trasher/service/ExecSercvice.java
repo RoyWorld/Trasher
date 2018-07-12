@@ -2,6 +2,7 @@ package com.trasher.service;
 
 import com.dolpins.domains.Table;
 import com.trasher.data.DataFactory;
+import com.trasher.data.TableIdMap;
 import com.trasher.database.DBOperator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,13 +32,13 @@ public class ExecSercvice {
     @Autowired
     List<Table> tables;
 
-    public void exec(List<Integer> sortList) throws SQLException, InterruptedException {
+    public void exec(List<Integer> sortList, TableIdMap tableIdMap) throws SQLException, InterruptedException {
         String sql = null;
         try {
             for (int j = 0; j < sortList.size(); j++) {
                 Table table = tables.get(sortList.get(j));
 
-                Map<String, Object> data = dataFactory.generateData(table.getSqlName());
+                Map<String, Object> data = dataFactory.generateData(table.getSqlName(), tableIdMap);
                 String columnName = "";
                 String columnData = "";
 

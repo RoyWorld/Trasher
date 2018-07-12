@@ -7,6 +7,8 @@ import com.trasher.util.ReflectUtil;
 
 import javax.annotation.Resource;
 import java.util.Map;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * 数据工厂
@@ -19,8 +21,10 @@ public class DataFactory {
     @Resource(name = "tableMap")
     private Map<String, Table> tableMap;
 
-    @Resource(name = "tableIdMap")
+//    @Resource(name = "tableIdMap")
     private TableIdMap tableIdMap;
+
+    public static final Lock lock = new ReentrantLock();
 
     /**
      * factory method
@@ -36,7 +40,7 @@ public class DataFactory {
         Class tableDataClass = Class.forName(clazz);
 
         Class[] classes = new Class[]{Table.class, TableIdMap.class};
-        Object[] args = new Object[]{table, tableIdMap};
+        Object[] args = new Object[]{table, this.tableIdMap};
         Object tableDataObject = ReflectUtil.newInstance(tableDataClass, classes, args);
 
         return (Map<String, Object>) ReflectUtil.invokeMethod(tableDataObject, tableDataClass, "produceData");
@@ -56,15 +60,17 @@ public class DataFactory {
      * @param tableName
      * @return
      */
-    public Map<String, Object> generateData(String tableName){
+    public Map<String, Object> generateData(String tableName, TableIdMap tableIdMap){
         Map<String, Object> data;
+        lock.lock();
         try {
-            LoadContext loadContext = LoadContext.getInstance();
-            data = loadContext.getBean(tableName);
+            this.tableIdMap = tableIdMap;
+            data = LoadContext.getBean(tableName);
         } catch (Exception e){
             RandomTableData randomTableData = new RandomTableData(tableMap.get(tableName), tableIdMap);
             data = randomTableData.produceData();
         }
+        lock.unlock();
         return data;
     }
 }
